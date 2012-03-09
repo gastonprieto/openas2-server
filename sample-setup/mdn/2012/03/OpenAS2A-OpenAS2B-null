@@ -1,0 +1,23 @@
+Headers:
+Date: Thu, 08 Mar 2012 17:53:45 -0300
+From: OpenAS2 A email
+Message-ID: <OPENAS2-08032012175345-0300-7006@OpenAS2B_OpenAS2A>
+Subject: Your Requested MDN Response
+Mime-Version: 1.0
+Content-Type: multipart/report; report-type=disposition-notification; 
+	boundary="----=_Part_0_757917044.1331240025927"
+AS2-To: OpenAS2A
+AS2-From: OpenAS2B
+AS2-Version: 1.1
+Server: OpenAS2 v0.9
+Content-Length: 543
+
+Attributes:
+DISPOSITION: automatic-action/MDN-sent-automatically; processed/Error:decryption-failed
+MIC: null
+ORIGINAL_MESSAGE_ID: null
+ORIGINAL_RECIPIENT: rfc822; OpenAS2B
+REPORTING_UA: OpenAS2 v0.9@/127.0.0.1:10080
+FINAL_RECIPIENT: rfc822; OpenAS2B
+Text:
+The message sent to Recipient OpenAS2B on null with Subject null has been received, but an error occured decrypting the content.
