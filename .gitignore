@@ -31,3 +31,7 @@ local.properties
 
 # PDT-specific
 .buildpath
+
+
+#Logs
+*log*.txt
