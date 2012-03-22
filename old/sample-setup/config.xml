@@ -1,6 +1,6 @@
 <openas2>
 	<certificates classname="org.openas2.cert.PKCS12CertificateFactory"
-		filename="%home%/certs.p12"
+		filename="%home%/a_keystore.p12"
 		password="test"
 		interval="300"/>		
 		
