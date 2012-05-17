@@ -12,7 +12,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <bcprov.version>1.46</bcprov.version>
+    <bcprov.version>1.47</bcprov.version>
     <mail.version>1.4.4</mail.version>    
   </properties>
 

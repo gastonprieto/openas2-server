@@ -20,6 +20,8 @@ local.properties
 .settings/
 .loadpath
 
+
+
 # External tool builders
 .externalToolBuilders/
 
@@ -35,3 +37,5 @@ local.properties
 
 #Logs
 *log*.txt
+
+target

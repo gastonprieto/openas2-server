@@ -14,6 +14,7 @@ import javax.mail.internet.MimeBodyPart;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.bouncycastle.mail.smime.SMIMECompressedGenerator;
 import org.openas2.DispositionException;
 import org.openas2.OpenAS2Exception;
 import org.openas2.WrappedException;
@@ -67,8 +68,24 @@ public class AS2SenderModule extends HttpSenderModule {
         
         try {
             // encrypt and/or sign the message if needed
+        	
+            SMIMECompressedGenerator compressor = new SMIMECompressedGenerator();
+            compressor.setContentTransferEncoding("binary");
+            MimeBodyPart compressedPart = compressor.generate(msg.getData(), SMIMECompressedGenerator.ZLIB);
+            msg.setContentType(compressedPart.getContentType());
+            msg.addHeader("Content-Transfer-Encoding", "binary");
+            msg.setData(compressedPart);
+          
+        	
+        	
             MimeBodyPart securedData = secure(msg);
             msg.setContentType(securedData.getContentType());
+            
+      
+            //finalMessage = new MimeMessage(session);
+            //finalMessage.setContent(compressedMimeMultipart.getContent(), compressedMimeMultipart.getContentType());
+                        
+            
 
             // Create the HTTP connection and set up headers
             String url = msg.getPartnership().getAttribute(AS2Partnership.PA_AS2_URL);
@@ -98,6 +115,7 @@ public class AS2SenderModule extends HttpSenderModule {
 				}
 
                 logger.info("connecting to " + url+msg.getLoggingText());
+                
 
                 // Note: closing this stream causes connection abort errors on some AS2 servers
                 OutputStream messageOut = conn.getOutputStream();
@@ -128,6 +146,8 @@ public class AS2SenderModule extends HttpSenderModule {
                 			+ " rm " +conn.getResponseMessage());
                     throw new HttpResponseException(url.toString(), conn.getResponseCode(), conn.getResponseMessage());
                 }
+                
+                logger.info("sent compressed version " + url+msg.getLoggingText());
 
                 // Asynch MDN 2007-03-12
                 // Receive an MDN
@@ -363,7 +383,8 @@ public class AS2SenderModule extends HttpSenderModule {
         conn.setRequestProperty("Message-ID", msg.getMessageID());
         conn.setRequestProperty("Mime-Version", "1.0"); // make sure this is the encoding used in the msg, run TBF1
         conn.setRequestProperty("Content-type", msg.getContentType());
-        conn.setRequestProperty("AS2-Version", "1.1");
+        conn.setRequestProperty("Content-Transfer-Encoding", msg.getHeader("Content-Transfer-Encoding"));
+        conn.setRequestProperty("AS2-Version", "1.2");
         conn.setRequestProperty("Recipient-Address", partnership.getAttribute(AS2Partnership.PA_AS2_URL));
         conn.setRequestProperty("AS2-To", partnership.getReceiverID(AS2Partnership.PID_AS2));
         conn.setRequestProperty("AS2-From", partnership.getSenderID(AS2Partnership.PID_AS2));
